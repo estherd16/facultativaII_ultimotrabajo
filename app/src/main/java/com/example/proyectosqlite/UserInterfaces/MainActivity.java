@@ -103,78 +103,16 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
-            btCancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.cancel();
-                }
-            });
+                btCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
                 dialog.show();
             }
         });
 
     }
 }
-       /* btAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void OnClick(View v) {
-                final Dialog dialog = new Dialog(MainActivity.this);
-
-                dialog.setContentView(R.layout.add_new);
-                dialog.setTitle("Agregar Asignaturas");
-                dialog.setCancelable(false);
-                Button btAddNew = (Button) dialog.findViewById(R.id.btNew);
-                Button btCancel = (Button) dialog.findViewById(R.id.btCancel);
-                btAddNew.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void OnClick(View v) {
-                        EditText editText_Name = (EditText) dialog.findViewById(R.id.editText_Name);
-                        EditText editText_Des = (EditText) dialog.findViewById(R.id.editText_Desc);
-                        ImageView imageAsig = (ImageView) dialog.findViewById(R.id.imageAsig);
-
-                        if ((editText_Name.getText().toString().contentEquals("")) ||
-                                (editText_Des.getText().toString().contentEquals(""))) {
-                            Toast.makeText(MainActivity.this, "Nombre y descripción es requerido",
-                                    Toast.LENGTH_LONG).show();
-                        } else {
-                            String nAsignatura, nDesc;
-
-                            nAsignatura = editText_Name.getText().toString();
-                            nDesc = editText_Des.getText().toString();
-
-                            Asignatura asignaturaObj = new Asignatura();
-
-                            asignaturaObj.setTitle(nAsignatura);
-                            asignaturaObj.setDescription(nDesc);
-
-                            long resultadoInsert = db.asignaturaDao().insert(asignaturaObj);
-                            if (resultadoInsert > 0) {
-
-                                listAsignaturas = db.asignaturaDao().getAllAsignatura();
-
-                                myAdapter = new MyAdapter(MainActivity.this, listAsignaturas);
-
-                                mRecyclerView.setAdapter(myAdapter);
-                                Toast.makeText(MainActivity.this, "Datos Insertados",
-                                        Toast.LENGTH_LONG).show();
-
-                                editText_Name.setText("");
-                                editText_Des.setText("");
-                            } else {
-                                Toast.makeText(MainActivity.this, "Error al insertar datos",
-                                        Toast.LENGTH_LONG).show();
-                            }
-                            dialog.cancel();
-                        }
-                    }
-                });
-                btCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void OnClick(View v) {
-                        dialog.cancel();
-                    }
-                });
-                dialog.show();
-            }
-        });*/
 
