@@ -8,10 +8,12 @@ import androidx.room.RoomDatabase;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnCreateContextMenuListener {
 
     RecyclerView mRecyclerView;
     MyAdapter myAdapter;
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recycleview1);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        myAdapter = new MyAdapter(this, listAsignaturas);
+        myAdapter = new MyAdapter(this, listAsignaturas, this);
 
         mRecyclerView.setAdapter(myAdapter);
 
@@ -93,8 +95,9 @@ public class MainActivity extends AppCompatActivity {
                             if (resultadoInsert > 0) {
                                 listAsignaturas = db.asignaturaDao().getAllAsignatura();
 
-                                myAdapter = new MyAdapter(MainActivity.this, listAsignaturas);
+                                myAdapter = new MyAdapter(MainActivity.this, listAsignaturas, MainActivity.this);
                                 mRecyclerView.setAdapter(myAdapter);
+                                //myAdapter.notifyDataSetChanged();
                                 Toast.makeText(MainActivity.this, "Datos Insertados", Toast.LENGTH_LONG).show();
 
                                 editText_Name.setText("");
@@ -119,6 +122,31 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        menu.setHeaderTitle("Opciones");
+        menu.add("Eliminar").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                try {
+                    final AdapterView.AdapterContextMenuInfo info= (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+                    Asignatura current = listAsignaturas.get(info.position);
+                    db.asignaturaDao().deleteById(current.getId());
+                    myAdapter = new MyAdapter(MainActivity.this, listAsignaturas, MainActivity.this);
+                    mRecyclerView.setAdapter(myAdapter);
+                    Toast.makeText(MainActivity.this, "Si elimino", Toast.LENGTH_SHORT).show();
+                }
+                catch(Exception ex) {
+                    Toast.makeText(MainActivity.this, "Error: " + ex.getMessage(), Toast.LENGTH_LONG).show();
+                }
+                return true;
+            }
+        });
+
     }
 }
 
