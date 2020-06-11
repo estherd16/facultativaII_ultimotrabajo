@@ -1,37 +1,13 @@
 package com.example.proyectosqlite.Entities;
 
 import android.provider.BaseColumns;
-import androidx.room.Entity;
+
 import androidx.room.ColumnInfo;
+import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-@Entity(tableName = Asignatura.TABLE_NAME)
+
+@Entity(tableName=Asignatura.TABLE_NAME)
 public class Asignatura {
-
-    public static final String TABLE_NAME="asignatura";
-
-    public static final String COLUMN_NAME="name";
-
-    public static final String COLUMN_ID= BaseColumns._ID;
-
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(index=true,name=COLUMN_ID)
-    public long id;
-
-    @ColumnInfo(name = "titulo")
-    private String title;
-
-    @ColumnInfo(name = "descripcion")
-    private String description;
-
-    public Asignatura(long id, String title, String description) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-    }
-
-    public Asignatura() {
-
-    }
 
     public long getId() {
         return id;
@@ -56,5 +32,28 @@ public class Asignatura {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Asignatura() {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+    }
+
+    public static final String TABLE_NAME = "asignatura";
+    public static final String COLUMN_NAME = "name";
+    public static final String COLUMN_ID = BaseColumns._ID;
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(index = true,name = COLUMN_ID)
+
+    public long id;
+
+    @ColumnInfo (name="titulo")
+    private String title;
+
+    @ColumnInfo(name="descripcion")
+    private String description;
+
+
 
 }
